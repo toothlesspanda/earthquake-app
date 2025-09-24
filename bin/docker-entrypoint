@@ -1,0 +1,15 @@
+#!/bin/bash -e
+
+if [ -z "${LD_PRELOAD+x}" ]; then
+    LD_PRELOAD=$(find /usr/lib -name libjemalloc.so.2 -print -quit)
+    export LD_PRELOAD
+fi
+
+if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
+  echo "--- Waiting for database to be ready ---"
+  ./bin/wait-for-it.sh db:5432 -- echo "Database is ready."
+  ./bin/rails db:prepare
+fi
+
+# Execute the main command (e.g., rails server)
+exec "${@}"

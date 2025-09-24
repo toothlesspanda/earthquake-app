@@ -1,0 +1,75 @@
+<!-- app/views/earthquakes/show.html.erb -->
+
+<div class="container mt-4 pb-3">
+  <div class="card shadow-sm">
+    <div class="card-header bg-warning-subtle">
+      <h3><i class="bi bi-geo-alt-fill"></i> <%= @earthquake.title %></h3>
+    </div>
+    <div class="card-body row">
+      <!-- Left: Details -->
+      <div class="col-md-6">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <strong>Event ID:</strong> <%= @earthquake.event_id %>
+          </li>
+          <li class="list-group-item">
+            <strong>Magnitude:</strong> <%= @earthquake.magnitude.round(2) %>
+          </li>
+          <li class="list-group-item">
+            <strong>Depth (km):</strong> <%= @earthquake.depth_km.round(2) %>
+          </li>
+          <li class="list-group-item">
+            <strong>Tsunami:</strong> <%= @earthquake.tsunami ? "Yes" : "No" %>
+          </li>
+          <li class="list-group-item">
+            <strong>Place:</strong> <%= @earthquake.metadata["place"] %>
+          </li>
+          <li class="list-group-item">
+            <strong>Coordinates:</strong>
+            <%= @earthquake.coordinates.latitude.round(4) %>,
+            <%= @earthquake.coordinates.longitude.round(4) %>
+          </li>
+          <li class="list-group-item">
+            <strong>Occurred At:</strong> <%= @earthquake.occurred_at.strftime("%d %b %Y %H:%M:%S") %>
+          </li>
+          <li class="list-group-item">
+            <strong>Created At:</strong> <%= @earthquake.created_at.strftime("%d %b %Y %H:%M:%S") %>
+          </li>
+          <li class="list-group-item">
+            <strong>Updated At:</strong> <%= @earthquake.updated_at.strftime("%d %b %Y %H:%M:%S") %>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right: Image placeholder -->
+      <div class="col-md-6 d-flex align-items-center justify-content-center">
+        <div class="border rounded p-3 text-center w-100">
+            <div
+              data-controller="map"
+              data-map-earthquake-id-value="<%= @earthquake.id %>"
+              data-map-lat-value="<%= @earthquake.coordinates.latitude %>"
+              data-map-lng-value="<%= @earthquake.coordinates.longitude %>"
+              data-map-title-value="<%= @earthquake.title %>"
+              style="height: 400px; width: 100%;"
+            >
+              <p>Loading map...</p>
+            </div>
+        </div>
+      </div>
+    </div>
+    <% if @earthquake.heightmap_image.attached? %>
+      <hr>
+      <div class="mx-auto text-center mb-5">
+        <h4>Heightmap / 3D visualization input</h4>
+        <div
+          data-controller="three"
+          data-three-image-url-value="<%= rails_blob_url(@earthquake.heightmap_image, only_path: false) %>"
+        ></div>
+      </div>
+    <% end %>
+
+    <div class="card-footer text-end">
+      <%= link_to "Back to list", earthquakes_path(page: params[:page]), class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>

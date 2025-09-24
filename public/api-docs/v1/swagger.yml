@@ -1,0 +1,133 @@
+openapi: 3.0.1
+info:
+  title: Earthquake API V1
+  version: v1
+servers:
+  - url: http://api.example.com
+    description: Development/Local Server
+
+components:
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    PagyParams:
+      name: page
+      in: query
+      description: The page number to retrieve. Defaults to 1.
+      schema:
+        type: integer
+        default: 1
+    PagyItems:
+      name: items
+      in: query
+      description: The number of items per page.
+      schema:
+        type: integer
+        default: 20
+    # --- RANSACK FILTER PARAMETERS ---
+    RansackMagnitudeGteq:
+      name: magnitude_gteq
+      in: query
+      description: Filter for earthquakes greater than or equal to this magnitude (Bigger Magnitude).
+      schema:
+        type: number
+        format: float
+    RansackMagnitudeLteq:
+      name: magnitude_lteq
+      in: query
+      description: Filter for earthquakes less than or equal to this magnitude (Smaller Magnitude).
+      schema:
+        type: number
+        format: float
+    RansackOccurredAtGteq:
+      name: occurred_at_gteq
+      in: query
+      description: Filter for events occurring after this date/time (YYYY-MM-DDTHH:MM:SSZ).
+      schema:
+        type: string
+        format: date-time
+    RansackOccurredAtLteq:
+      name: occurred_at_lteq
+      in: query
+      description: Filter for events occurring before this date/time (YYYY-MM-DDTHH:MM:SSZ).
+      schema:
+        type: string
+        format: date-time
+    RansackTsunamiEq:
+      name: tsunami_eq
+      in: query
+      description: Filter for events that did (true) or did not (false) cause a tsunami.
+      schema:
+        type: boolean
+
+paths:
+  /api/v1/earthquakes:
+    get:
+      tags:
+        - Earthquakes
+      summary: Retrieves a list of authenticated, filterable, and paginated earthquake records.
+      security:
+        - bearer_auth: []
+      parameters:
+        - $ref: '#/components/parameters/PagyParams'
+        - $ref: '#/components/parameters/PagyItems'
+        - $ref: '#/components/parameters/RansackMagnitudeGteq'
+        - $ref: '#/components/parameters/RansackMagnitudeLteq'
+        - $ref: '#/components/parameters/RansackOccurredAtGteq'
+        - $ref: '#/components/parameters/RansackOccurredAtLteq'
+        - $ref: '#/components/parameters/RansackTsunamiEq'
+      responses:
+        '200':
+          description: List of earthquake records and pagination metadata.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object # Use a more detailed schema if desired
+                  metadata:
+                    type: object
+                    properties:
+                      pagy:
+                        type: object
+                        description: Pagination details (count, pages, next, prev, etc.)
+
+        '401':
+          description: Unauthorized access (Missing or invalid Bearer Token).
+
+  /api/v1/earthquakes/{id}:
+    get:
+      tags:
+        - Earthquakes
+      summary: Retrieves a specific authenticated earthquake record by ID.
+      security:
+        - bearer_auth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the earthquake record.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Earthquake record found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id: { type: integer, example: 1 }
+                  title: { type: string, example: 'M 5.5 - Test Event' }
+                  magnitude: { type: number, format: float, example: 5.5 }
+                  # Add other core attributes here
+        '404':
+          description: Record not found.
+        '401':
+          description: Unauthorized access (Missing or invalid Bearer Token).

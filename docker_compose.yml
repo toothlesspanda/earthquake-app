@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: postgres://postgres:password@db:5432/earthquake_app_development
+    entrypoint: /usr/bin/docker-entrypoint.sh
+    command: ["rails", "server", "-b", "0.0.0.0"]
+
+  db:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: earthquake_app_development
+    ports:
+      - "5432:5432"
+
+  wait:
+    image: "willfaught/wait-for-it"
+    container_name: wait_for_db
+    volumes:
+      - ./bin:/app/bin
+
+volumes:
+  postgres_data:
+  bundle_cache:
