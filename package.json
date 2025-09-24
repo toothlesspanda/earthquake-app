@@ -1,0 +1,31 @@
+{
+  "name": "app",
+  "private": true,
+  "devDependencies": {
+    "esbuild": "^0.25.10"
+  },
+  "scripts": {
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",
+    "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
+    "build:css:watch": "nodemon --watch ./app/assets/stylesheets/ --ext scss --exec \"yarn build:css\"",
+    "watch:js": "nodemon --watch ./app/javascript/ --ext js --exec \"yarn build\""
+  },
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo-rails": "^8.0.16",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1",
+    "chart.js": "^4.5.0",
+    "chartjs-adapter-date-fns": "^3.0.0",
+    "date-fns": "^4.1.0",
+    "esbuild-sass-plugin": "^3.3.1",
+    "leaflet": "^1.9.4",
+    "leaflet-image": "^0.4.0",
+    "leaflet.awesome-markers": "^2.0.5",
+    "nodemon": "^3.1.10",
+    "sass": "^1.93.2",
+    "three": "^0.180.0",
+    "three-orbitcontrols": "^2.110.3"
+  }
+}

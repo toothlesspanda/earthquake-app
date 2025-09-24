@@ -1,0 +1,6 @@
+<%= turbo_frame_tag "3d_visualization_frame" do %>
+    <div
+      data-controller="three"
+      data-three-image-url-value="<%= rails_blob_url(@earthquake.heightmap_image, only_path: false) %>"
+    ></div>
+<% end %>
