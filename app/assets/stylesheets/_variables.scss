@@ -1,0 +1,58 @@
+// Colors
+$blue: #529f7f !default;
+$indigo:  #6610f2 !default;
+$purple:  #6f42c1 !default;
+$pink:    #d63384 !default;
+$red:     #dc3545 !default;
+$orange:  #fd7e14 !default;
+$yellow:  #ffc107 !default;
+$green: #40d306 !default;
+$teal:    #20c997 !default;
+$cyan:    #0dcaf0 !default;
+$white:   #fff !default;
+
+$gray:    #6c757d !default;
+$gray-dark: #343a40 !default;
+
+$primary: $blue !default;
+$secondary: $gray !default;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: #f8f9fa !default;
+$dark: $gray-dark !default;
+
+$body-bg: #fbf9f2;
+
+// Breakpoints
+$grid-breakpoints: (
+        xs: 0,
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: 1200px,
+        xxl: 1400px
+) !default;
+
+// Spacers
+$spacers: (
+        0: 0,
+        1: 0.25rem,
+        2: 0.5rem,
+        3: 1rem,
+        4: 1.5rem,
+        5: 3rem
+) !default;
+
+// Fonts
+$font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
+$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
+$font-size-base: 1rem !default;
+$font-weight-base: 400 !default;
+
+// Borders
+$border-width: 1px !default;
+$border-radius: 0.375rem !default;
+$border-radius-lg: 0.5rem !default;
+$border-radius-sm: 0.25rem !default;
