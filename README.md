@@ -1,5 +1,5 @@
 # Earthquake APP / Interview Exercise
-This whole app was created under a interview exercise, done in ~17h (accumulative)
+This whole app was created under a interview exercise, done in ~17h (accumulative). Exercise [requirements](REQUIREMENTS.md) for this app
 
 <!-- TOC -->
 * [Earthquake APP](#earthquake-app)
