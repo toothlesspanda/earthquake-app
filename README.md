@@ -1,4 +1,6 @@
-# Earthquake APP
+# Earthquake APP / Interview Exercise
+This whole app was created under a interview exercise, done in ~17h (accumulative)
+
 <!-- TOC -->
 * [Earthquake APP](#earthquake-app)
   * [Stack decisions](#stack-decisions)
@@ -21,6 +23,7 @@
       * [Examples](#examples)
   * [Specs](#specs)
 <!-- TOC -->
+
 
 For this app I am using the stack:
 - Framework: Ruby / Rails
